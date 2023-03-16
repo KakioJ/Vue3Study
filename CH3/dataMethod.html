@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="Application">
+        <!-- 计算属性和函数的区别 -->
+        <!-- 计算属性是基于其所依赖的存储属性的值的变化而重新计算的
+            ，计算完成后，其结果会被缓存，下次访问计算属性时，
+            只要其所依赖的属性没有变化，其内的逻辑代码就不会重复执行。
+            而函数则不同，每次访问其都会重新执行函数内的逻辑代码得到的结果 -->
+        <div>
+            {{count}}比10{{type}}
+        </div>
+        <div>
+            {{count}}比10{{typeFunc()}}
+        </div>
+        <button @click="add">Add</button>
+    </div>
+</body>
+<script>
+    const App = {
+        data() {
+            return {
+                count: 0,
+            }
+        },
+        // computed选项定义计算属性
+        computed: {
+            type: {
+                // 实现计算属性的get方法，用来取值
+                get() {
+                    return this.count > 10 ? "大" : "小"
+                },
+                // 实现计算属性的set方法，用来设置值
+                set(newValue) {
+                    if(newValue == "大"){
+                        this.count = 11
+                    }else {
+                        this.count = 0
+                    }
+                }
+            }
+        },
+        methods: {
+            add() {
+                this.count++
+            },
+            typeFunc() {
+                return this.count > 10 ? "大" : "小"
+            }
+        }
+    }
+    // 创建组件并获取组件实例
+    let instance = Vue.createApp(App).mount("#Application");
+    // 可以获取到组件中的data数据
+    console.log(instance.count);
+    // 可以获取到组件中的data数据
+    console.log(instance.$data.count);
+    instance.count = 5;
+    console.log(instance.count);
+    
+    
+    // 使用组件实例来调用此方法
+    instance.add();
+    console.log(instance.$data.count);
+    
+    // 像访问普通属性一样访问计算属性
+    console.log(instance.type);
+
+    // 对计算属性进行修改
+    instance.type = "大"
+    console.log(instance.count)
+
+
+</script>
+
+</html>
