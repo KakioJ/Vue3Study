@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="Application">
+        <!-- v-for指令可以将一个数组中的数据渲染为列表视图 -->
+        <div v-for="item in list">
+            {{item}}
+        </div>
+
+        <div v-for="item in objList">
+            {{item.name}}
+            {{item.num}}
+        </div>
+
+        <!-- 获取到当前遍历项的索引 -->
+        <div>
+            <ul v-for="(item,index) in objList">
+                <div>{{index + "." + item.name}}</div>
+                <div>{{item.num}}</div>
+            </ul>
+        </div>
+
+        <!-- 使用v-for来遍历对象  v-for的第一个参数为遍历的对象中的属性的值，第二个参数为遍历的对象中的属性的名字，第三个参数为遍历的索引 -->
+        <ol>
+            <li v-for="(value,key,index) in person">
+                {{key}}:{{value}}
+            </li>
+        </ol>
+
+        <!-- 为了更好地对列表项进行重用，可以将其key属性绑定为一个唯一值 -->
+        <ol>
+            <li v-for="(value,key,index) in person" :key="index">
+                {{key}}:{{value}}
+            </li>
+        </ol>
+
+        <!-- reverse() 对列表进行逆序 -->
+        <button @click="click">
+            reverse()逆序
+        </button>
+
+        <!--v-for指令支持在渲染钱对数据进行额外地处理 -->
+        <ul>
+            <li v-for="(item,index) in handle(objList)">
+                <div>{{index + "." + item.name}}</div>
+                <div>{{item.num}}</div>
+            </li>
+        </ul>
+
+    </div>
+</body>
+<script>
+    const App = {
+        data() {
+            return {
+                // 渲染的数据为数组
+                list: [1, 2, 3, 4, 5],
+                // 渲染的数据为对象数据
+                objList: [
+                    {
+                        name: "kakio",
+                        num: "1111111112"
+                    },
+                    {
+                        name: "xiaojiang",
+                        num: "2222222222"
+                    },
+                    {
+                        name: "xiaohong",
+                        num: "3333333333"
+                    },
+                    {
+                        name: "xiaolue",
+                        num: "4444444444"
+                    }
+
+                ],
+                person: {
+                    name: "jianjilong",
+                    age: "3",
+                    num: "1111111111111",
+                    email: "1589610753@qq.com"
+                }
+            }
+        },
+        methods: {
+            click() {
+                this.list.reverse();
+            },
+            handle(l) {
+                return l.filter(obj => obj.name != "xiaohong")
+            }
+        },
+    }
+    Vue.createApp(App).mount("#Application");
+</script>
+
+</html>

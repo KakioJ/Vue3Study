@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 通过CDN的方式引入Vue3 -->
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="loginApp" style="text-align: center;">
+        <h1>欢迎您：{{title}}</h1>
+        <div v-if="nologin">账号：<input type="text" v-model="userName"/></div>
+        <div v-if="nologin">密码：<input type="password" v-model="password"/></div>
+        <div v-on:click="click" style="border-radius: 30px; width: 100px; margin: 20px auto; color: white; background-color: blue;">{{buttonTitle}}</div>
+    </div>
+</body>
+<script>
+    const App = {
+        data() {
+            return {
+                title:"未登录",
+                nologin:true,
+                userName:"",
+                password:"",
+                buttonTitle:"登录"
+            }
+        },
+        methods:{
+            click() {
+                if(this.nologin){
+                    this.login()
+                }else{
+                    this.logout()
+                }
+            },
+            // 登录
+            login() {
+                // 判断账号、密码是否为空
+                if(this.userName.length > 0 && this.password.length > 0){
+                    // 登录提示后刷新页面 
+                    alert('userName: ' + this.userName + ' ' + 'password: ' + this.password)
+                    this.nologin = false
+                    this.title = this.userName
+                    this.buttonTitle = "注销"
+                    this.userName = ""
+                    this.password = ""
+                } else {
+                    alert("请输入账号密码")
+                }
+            },
+            // 登出
+            logout() {
+                // 清空登录数据
+                this.nologin = true
+                this.title = "未登录"
+                this.buttonTitle = "登录"
+            }
+        }
+    }
+    Vue.createApp(App).mount("#loginApp")
+</script>
+</html>

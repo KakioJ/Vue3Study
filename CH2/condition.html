@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="Application">
+        <!-- 通过条件渲染的方式来控制Html元素的显示与隐藏 -->
+        <h1 v-if="show">标题</h1>
+        <!-- 设置了v-else指令的元素必须紧跟在v-if或v-if-else指令指定的元素后面，否则不会被识别到 -->
+        <!-- <h1>Hello</h1> -->
+        <p v-else>如果不显示标题就显示段落</p>
+
+        <!-- 使用v-else-if来实现多分支渲染逻辑-->
+        <h1 v-if="mark == 100">满分</h1>
+        <h1 v-else-if="mark > 60">及格</h1>
+        <h1 v-else>不及格</h1>
+
+        <!-- 推荐使用template标签来控制一组元素的条件渲染逻辑。相比使用div元素本身就会被渲染出来，使用template进行分组组件渲染后并不会渲染template标签本身 -->
+        <div v-if="show">
+            <p>ni</p>
+            <p>ni</p>
+            <p>ni</p>
+        </div>
+
+        <template v-if="show">
+            <p>hao</p>
+            <p>hao</p>
+            <p>hao</p>
+        </template>
+
+        <!-- v-show指令同v-if,设置条件的值来决定元素的渲染情况  但是v-show不支持template模板-->
+        <!-- v-show指令设置的条件是真是假当前元素都会被渲染，其只是简单地通过切换元素css样式中地display属性来实现展示效果 -->
+        <!-- v-if在条件变换地过程中，组件内部地事件监听器都会正常地执行，子组件也会正常地被销毁或重建 -->
+        <h1 v-show="show">v-show标题在这里</h1>
+        <h1 v-if="show">v-if标题在这里</h1>
+
+        
+    </div>
+</body>
+<script>
+    const App = {
+        data() {
+            return {
+                show:false,
+                mark:30
+            }
+        }
+    }
+    Vue.createApp(App).mount("#Application");
+</script>
+</html>
