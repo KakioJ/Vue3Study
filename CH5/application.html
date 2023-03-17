@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    
+</body>
+<script>
+    const appData = {
+        count:0
+    }
+    const App = Vue.createApp(
+        {
+            // data函数提供应用所需的全局数据
+            data() {
+               return appData
+            },
+            // computed配置组件的计算属性，可以在其中实现getter和setter方法
+            computed: {
+                countString: {
+                    get() {
+                        return this.count + "次"
+                    }
+                }
+            },
+            // 配置组件中需要使用到的方法
+            methods: {
+                click() {
+                    this.count += 1
+                },
+                countChange(value,oldValue){
+                    console.log(value,oldValue)
+                }
+            },
+            // watch配置项可以对组件属性的变化添加监听函数
+            watch:{
+                count(value,oldValue){
+                    console.log(value,oldValue)
+                },
+                // 当监听的组件属性发生变化时，监听函数中会将变化后的值与变化前的值作为参数传递进来
+                count:"countChange"
+            }
+        }
+    )
+</script>
+</html>

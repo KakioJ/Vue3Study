@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="Application">
+        <my-alert  @myclick="appfunc" title="按钮1"></my-alert>
+        <my-alert title="按钮2"></my-alert>
+    </div>
+    
+</body>
+<script>
+    const App = Vue.createApp({})
+    const aletrComponent = {
+        data() {
+            return {
+                msg:"警告框提示",
+                count:0
+            }
+        },
+        methods: {
+            click() {
+                alert(this.msg + this.count++)
+            },
+            appfunc(){
+                console.log('点击了自定义组件')
+            }
+        },
+        props:["title"],
+        // props定义的属性是提供给外部进行设置使用的，将其称为外部属性
+        template:'<div><button @click="$emit('myclick')">{{title}}</button></div>'
+    }
+    App.component("my-alert",aletrComponent)
+    App.mount("#Application")
+</script>
+</html>
