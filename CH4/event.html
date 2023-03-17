@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件绑定</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="Application">
+        <div>点击次数：{{count}}</div>
+        <button @click="click">点击</button>
+
+        <!-- 将要执行的逻辑代码放入@click赋值的地方 -->
+        <button @click="this.count += 1">点击2</button>
+
+        <!-- DOM元素绑定执行事件传自定义的参数 -->
+        <button @click="clickStep(2)">点击3</button>
+
+        <!-- 使用系统的Event对象参数 -->
+        <button @click="clickEvent(2,event)">点击4</button>
+        
+        <!-- 多事件调用绑定 -->
+        <button @click="clickStep(2),logEvent(this.event)">点击5</button>
+
+        <!--  从父组件开始依次传递到子组件，这一过程通常被形象地称为事件捕获，
+            当事件传递到最上层的子组件时，其还会逆向地再进行一轮传递，
+            从子组件依次向下传递，这一过程被称为事件冒泡-->
+        <!-- 事件过程示例 -->
+        <div @click="click1" style="border: solid red;">
+            外层
+            <div @click="click2" style="border: solid red;">
+                中层
+                <div @click="click3" style="border: solid red;">
+                    点击
+                </div>
+            </div>
+        </div>
+
+        <!-- 监听捕获阶段的事件，使用事件修饰符capture -->
+        <div @click.capture="click1" style="border: solid red;">
+            外层
+            <div @click.capture="click2" style="border: solid red;">
+                中层
+                <div @click.capture="click3" style="border: solid red;">
+                    点击
+                </div>
+            </div>
+        </div>
+
+        <!-- stop修饰符可以阻止事件的传递 -->
+        <div @click.stop="click1" style="border: solid red;">
+            外层
+            <div @click.stop="click2" style="border: solid red;">
+                中层
+                <div @click.stop="click3" style="border: solid red;">
+                    点击
+                </div>
+            </div>
+        </div>
+
+        <!-- 事件修饰符可以串联使用 -->
+        <div @click.stop="click1" style="border: solid red;">
+            外层
+            <div @click.stop.once="click2" style="border: solid red;">
+                中层
+                <div @click.stop.once="click3" style="border: solid red;">
+                    点击
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</body>
+<script>
+    const App = {
+        data() {
+            return {
+                count:0,
+                event:"nihao"
+            }
+        },
+        methods: {
+            click(){
+                this.count += 1;
+            },
+            clickStep(step){
+                this.count += step;
+            },
+            clickEvent(step,event){
+                console.log(event);
+                this.count += step
+            },
+            logEvent(string){
+                console.log(string);
+            },
+            click1(){
+                console.log("外层");  
+            },
+            click2(){
+                console.log("中层")
+            },
+            click3(){
+                console.log("内层")
+            }
+        },
+    }
+    Vue.createApp(App).mount("#Application")
+</script>
+</html>
