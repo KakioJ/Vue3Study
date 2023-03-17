@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>限流函数</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="Application">
+        <button @click="ClickTestThrottle">
+            点击测试
+        </button>
+        <p>{{clickTime}}</p>
+    </div>
+</body>
+<script>
+    var throttle = false;
+    function throttleTool(callback,timeout){
+        if(!throttle){
+            callback()
+        }else {
+            return 
+        }
+        throttle = true;
+        setTimeout(() => {
+            throttle = false
+        },timeout)
+    }
+    const App = {
+        data() {
+            return {
+                clickTime:""
+            }
+        },
+        methods: {
+            ClickTestThrottle(){
+                throttleTool(()=>{
+                    this.clickTime = Date();
+                },2000)
+            }
+        },
+    }
+    Vue.createApp(App).mount("#Application")
+</script>
+</html>

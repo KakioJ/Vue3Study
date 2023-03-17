@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,14 +9,66 @@
     <script src="https://unpkg.com/vue@next"></script>
     <style>
         .red {
-            color:red
+            color: red
         }
+
         .blue {
-            color:blue
+            color: blue
+        }
+        .yellow {
+            color: yellow;
+        }
+        .green {
+            color: green;
+        }
+        .font {
+            font-size: 20px;
         }
     </style>
 </head>
+
 <body>
-    
+    <div id="Application">
+        <div :class="{blue:isBlue,red:isRed}">
+            示例文案
+        </div>
+
+        <!-- 将class数据设置为一个Vue组件中的数据对象 -->
+        <div :class=style>
+            Vue组件中的数据对象绑定
+        </div>
+
+        <!-- 使用数组对象来控制class属性 -->
+        <div :class="[redClass, fontClass]">
+            使用数组对象来控制class
+        </div>
+
+        <!-- 直接使用HTML元素的style属性来设置样式 -->
+        <div :style="{color:textColor,fontSize:textFont}">
+            绑定内联样式
+        </div>
+
+    </div>
+
 </body>
+<script>
+    const App = {
+        data() {
+            return {
+                isBlue: true,
+                isRed: false,
+                style:{
+                    yellow:true,
+                    green:false
+                },
+                redClass:"red",
+                fontClass:"font",
+                textColor:"green",
+                textFont:"50px"
+            }
+        }
+    }
+    Vue.createApp(App).mount("#Application")
+</script>
+
 </html>
