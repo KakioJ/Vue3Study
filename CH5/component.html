@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自定义组件</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="Application">
+        <my-alert></my-alert>
+        <my-alert></my-alert>
+        <my-alertprops title="你最爱点击的按钮"></my-alertprops>
+        <my-alertemit title="emit测试" @myclick="appfunc"></my-alertemit>
+    </div>
+    <!-- my-alert组件只能在挂载的变迁内使用，载外部使用无法正常工作 -->
+    <!-- <my-alert></my-alert> -->
+</body>
+<script>
+    const App = Vue.createApp({
+        methods:{
+            appfunc(param){
+                console.log('点击了自定义组件--'+param)
+            }
+        }
+    })
+    const alertComponent = {
+        data() {
+            return {
+                msg:"警告框提示",
+                count:0
+            }
+        },
+        methods: {
+            click(){
+                alert(this.msg + this.count++)
+            }
+        },
+        template:'<div><button @click="click">按钮</button></div>'
+    }
+    const alertComponent2 = {
+        data() {
+            return {
+                msg:"警告框提示",
+                count:0
+            }
+        },
+        methods: {
+            click(){
+                alert(this.msg + this.count++)
+            }
+        },
+        props:["title"],
+        template:'<div><button @click="click">{{title}}</button></div>'
+    }
+    // 业务方处理按钮单击的时间
+    const alertComponent3 = {
+        methods:{
+            click(){
+                console.log("组件内部的逻辑")
+                this.$emit('myclick',this.title)
+            }
+        },
+        props:["title"],
+        // emit这里存在疑问，一直未能够去解决，先挂起
+        template:'<div><button @click="click">{{title}}</button></div>'
+    }
+    App.component("my-alertemit",alertComponent3)
+    App.component("my-alert",alertComponent)
+    App.component("my-alertprops",alertComponent2)
+    App.mount("#Application")
+</script>
+</html>

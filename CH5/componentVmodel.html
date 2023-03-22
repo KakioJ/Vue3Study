@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>为自定义组件添加v-model</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="Application">
+        <my-input v-model="inputtext"></my-input>
+        <div>{{inputtext}}</div>
+        <button @click="this.inputtext=''">清空</button>
+    </div>
+</body>
+<script>
+    const App = Vue.createApp({
+        data() {
+            return {
+                inputtext:""
+            }
+        },
+    })
+    const inputComponent = {
+        props:["modelValue"],
+        methods: {
+            action(event){
+                this.$emit('update:modelValue',event.target.value)
+            }
+        },
+        template:'<div><span>输入框：</span><input :value="modelValue" @input="action"></div>'
+    }
+    App.component("my-input",inputComponent)
+    App.mount("#Application")
+</script>
+</html>

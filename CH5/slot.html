@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件插槽的基本用法</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="Application">
+        <my-container></my-container>
+        <my-container2>
+            <template v-slot:header>
+                <h1>这里是头部元素</h1>
+            </template>
+            <template v-slot:main>
+                <p>内容部分</p>
+                <p>内容部分</p>
+            </template>
+            <!-- 可以使用#来代替v-slot: -->
+            <template #footer>
+                <p>这里是尾部元素</p>
+            </template>
+        </my-container2>
+    </div>
+
+</body>
+<script>
+    const App = Vue.createApp({
+    })
+    const containerComponent = {
+        template:'<div style="border-style:solid;border-color:red;border-width:10px"><slot>默认插槽的内容</slot></div>'
+        
+    }
+    const containerComponent2 = {
+        template:
+        '<div>'+
+        '<slot name="header"></slot>' +
+        '<hr/>' +
+        '<slot name="main"></slot>' +
+        '<hr/>' +
+        '<slot name="footer"></slot>' +
+        '</div>'
+    }
+    App.component("my-container2",containerComponent2)
+    App.component("my-container",containerComponent)
+    App.mount("#Application")
+</script>
+</html>

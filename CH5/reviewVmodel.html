@@ -15,6 +15,14 @@
             <button @click="this.inputText = ''">清空</button>
         </div>
     </div>
+
+    <div id="ApplicationB">
+        <div>
+            <input :value="inputtext" @input="action"/>
+            <div>{{inputtext}}</div>
+            <button @click="this.inputtext = ''">清空</button>
+        </div>
+    </div>
 </body>
 <script>
     const App = Vue.createApp({
@@ -24,6 +32,20 @@
             }
         }
     })
+    // 不使用v-model实现双向绑定
+    const Appb = Vue.createApp({
+        data() {
+            return {
+                inputtext:""
+            }
+        },
+        methods: {
+            action(event){
+                this.inputtext = event.target.value
+            }
+        },
+    })
+    Appb.mount("#ApplicationB")
     App.mount("#Application")
 </script>
 </html>
