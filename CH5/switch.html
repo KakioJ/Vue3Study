@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue开关组件</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    
+</body>
+<script>
+    const app = Vue.createApp({})
+    const switchComponent = {
+        // 定义的外部属性
+        props:["swicthStyle","borderColor","backgroundColor","color"],
+        // 内部属性，控制开关状态
+        data() {
+            return {
+                isOpen:false,
+                left:'0px'
+            }
+        },
+        // 通过计算属性来设置css样式
+        computed: {
+            cssStyleBG:{
+                get() {
+                    if(this.switchStyle == "mini"){
+                        return 'position:relative;border-color:$(this.borderColor);border-width:2px;'
+                    }
+                }
+            }
+        }
+    }
+</script>
+</html>

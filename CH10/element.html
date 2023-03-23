@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElementUI</title>
+    <link rel="stylesheet" href="//unpkg.com/element-plus/dist/index.css" />
+    <!-- Import Vue 3 -->
+    <script src="//unpkg.com/vue@3"></script>
+    <!-- Import component library -->
+    <script src="//unpkg.com/element-plus"></script>
+</head>
+<body>
+    <div id="Application" style="text-align:center;">
+        <div style="margin: 40px;"><el-tag>这里是模板的内容：{{count}}点击</el-tag></div>
+        <div><el-button @click="clickButton">按钮</el-button></div>
+    </div>
+    <script>
+        const App ={
+            data() {
+                return {
+                    count:0,
+                }
+            },
+            methods: {
+                clickButton() {
+                    this.count = this.count + 1
+                }
+            },
+        }
+        let instance = Vue.createApp(App)
+        instance.use(ElementPlus)
+        instance.mount("#Application")
+    </script>
+</body>
+</html>
