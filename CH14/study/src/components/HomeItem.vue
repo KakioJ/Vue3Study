@@ -5,7 +5,7 @@
         </el-header>
         <el-main>
 
-            <Body :items="bodyItems"></Body>
+            <Body :items="bodyItems" :topic="navItems[currentTopicIndex].title"></Body>
         </el-main>
         <el-footer>
             <div id="footer">{{ desc }}</div>
@@ -17,11 +17,11 @@ import Header from "./HeaderItem.vue";
 import Body from "./BodyItem.vue";
 import FM from "../tools/FileManager.js";
 export default {
-    mounted() {
-        FM.getPostContent('HTML专题', '文本标签').then((res) => {
-            console.log(res)
-        })
-    },
+    // mounted() {
+    //     FM.getPostContent('HTML专题', '文本标签').then((res) => {
+    //         console.log(res)
+    //     })
+    // },
     components: {
         Header: Header,
         Body: Body,
@@ -57,7 +57,7 @@ export default {
             //     },
             // ],
             desc: "版权所有，仅限学习使用，禁止传播！",
-            currentTopicIndex:0
+            currentTopicIndex: 0
         };
     },
     methods: {
@@ -65,12 +65,12 @@ export default {
             this.currentTopicIndex = index
         }
     },
-    computed:{
+    computed: {
         bodyItems() {
-            return FM.getPosts(this.currentTopicIndex).map((item,ind)=>{
+            return FM.getPosts(this.currentTopicIndex).map((item, ind) => {
                 return {
-                    index:ind,
-                    title:item
+                    index: ind,
+                    title: item
                 }
             })
         }
