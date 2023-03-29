@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // let a = 1;
+        // let b = 2;
+        // let sum = a + b;
+        // console.log(sum);
+        // a = 3;
+        // b = 4;
+        // console.log(sum);
+        // 两次sum的值是一致的
+        // 为sum变量值添加响应式变化
+        // 定义对象数据
+        let a = {
+            value: 1
+        };
+        let b = {
+            value: 2
+        };
+        // 定义触发器，用来刷新数据
+        let trigger = null;
+        // 定义处理器
+        handleA = {
+            // get(target,prop){
+            //     console.log('获取A:${prop}的值')
+            //     return target[prop]
+            // },
+            set(target, key, value) {
+                target[key] = value
+                if(trigger) {
+                    trigger()
+                }
+                // console.log('设置A:${key}的值${value}')
+            }
+        }
+        handleB = {
+            // get(target, prop) {
+            //     console.log('获取B:${prop}的值')
+            //     return target[prop]
+            // },
+            set(target, key, value) {
+                target[key] = value
+                if(trigger) {
+                    trigger()
+                }
+                // console.log('设置B:${key}的值${value}')
+            }
+        }
+        // 进行对象的代理包装
+        let pa = new Proxy(a, handleA)
+        let pb = new Proxy(b, handleB)
+        // let sum = pa.value + pb.value;
+        let sum = 0
+        // 实现触发器路逻辑
+        trigger = () => {
+            sum = pa.value + pb.value;
+        };
+        trigger();
+        console.log(sum);
+        pa.value = 3
+        pb.value = 4
+        console.log(sum);
+    </script>
+</body>
+
+</html>
